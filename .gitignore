@@ -10,6 +10,7 @@
 
 # production
 /build
+/hotmodelsgallery
 
 # misc
 .DS_Store

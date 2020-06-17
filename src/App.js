@@ -9,6 +9,12 @@ const style = {
   padding: 8,
 };
 
+let init = [
+{"link": "https://i.imgur.com/gvO4zNP.jpg"},
+{"link": "https://i.imgur.com/guM9nbb.jpg"},
+{"link": "https://i.imgur.com/OXR1aWn.jpg"}
+]
+
 let fetchingImgs = async(page)=>{
 
   let imgArray = await fetch(`https://api.imgur.com/3/account/me/images/${page}`,
@@ -19,12 +25,13 @@ let fetchingImgs = async(page)=>{
     return response.data
   });
   return imgArray;
-
 }
 
+let count=0
+
 function App() {
-  const [page, setPage] = useState(0);
-  const [item, setItem] = useState([{link:"https://i.imgur.com/gjPG9Hf.jpg"},{link:"https://i.imgur.com/gjPG9Hf.jpg"},{link:"https://i.imgur.com/gjPG9Hf.jpg"}]);
+  //const [page, setPage] = useState(0);
+  const [item, setItem] = useState(init);
   
   console.log(item)
 
@@ -33,16 +40,14 @@ function App() {
     // 20 more records in 1.5 secs
     // setTimeout(() => {
     //   setItem(item.concat(Array.from({ length: 20 })));
-    // }, 1500);
-    setPage(page+1);
-    setItem(item.concat(await fetchingImgs(page)));
-    
+    // }, 1500);    
+    setItem(item.concat(await fetchingImgs(count)));
+    count++;
+    console.log(count)
   };
 
   return (
-    <div>
-      <h1>demo: react-infinite-scroll-component</h1>
-      <hr />
+    <div>     
       <InfiniteScroll
         dataLength={item.length}
         next={() => {
